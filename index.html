@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>加载中...</title>
+    <script src="/static/common.js"></script>
+    <link rel="icon" href="static/log.ico" type="image/x-icon" />
+  </head>
+  <body style="min-height: 98vh">
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+  <!--todo 内网去掉-->
+  <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+  <script>
+    //todo 内网去掉
+    var  _caq = _caq || []
+    var ip = returnCitySN.cip
+    localStorage.setItem('returnCitySNIp', ip)
+    // _caq.push(['_setAccount', 'xxx1111'])
+    _caq.push(['_setDomainName', 'none'])
+    _caq.push(['_trackPageview'])// 进行页面追踪
+    _caq.push(['_setIp', ip])
+    function getD() {
+      var ga = document.createElement('script')
+      ga.type = 'text/javascript'
+      ga.async = true
+      ga.src = 'http://geocloud.cgs.gov.cn/ga/ga.js'
+      var s1 = document.getElementsByTagName('script')[1]
+      s1.parentNode.insertBefore(ga, s1)
+    }
+    getD()
+  </script>
+</html>

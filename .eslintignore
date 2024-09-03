@@ -1,0 +1,8 @@
+/build/
+/config/
+/dist/
+/*.js
+/src/gxfw/*.js
+/src/dzy/*.js
+/test/unit/coverage/
+/src/comm/components/searchCondition.vue
