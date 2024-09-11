@@ -14,7 +14,7 @@ import { mapActions } from 'vuex'
 // import { getGuid } from '@/utils/common.js'
 // import Cookies from 'js-cookie'
 export default {
-  name: 'App',
+  name: 'Web',
   data () {
     return {
       myListenerDate: {
