@@ -40,8 +40,8 @@ module.exports = {
       },
       '/system': {
         // 目标 API 地址
-        // target: 'http://10.82.8.57:6092/',
-        target: 'http://127.0.0.1:6092',
+        target: 'http://10.82.8.57:6092/',
+        // target: 'http://127.0.0.1:6092',
         // 如果要代理 websockets
         ws: true,
         // 将主机标头的原点更改为目标URL

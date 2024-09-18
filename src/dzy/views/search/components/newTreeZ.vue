@@ -932,24 +932,24 @@
     font-weight:500;
     background-color: rgba(249,250,251,1);
   }
-  .cy-menu .el-tree--highlight-current /deep/ .el-tree-node.is-checked>.el-tree-node__content {
+  .cy-menu .el-tree--highlight-current ::v-deep .el-tree-node.is-checked>.el-tree-node__content {
     background-color: rgba(0,153,250,0.1);
     color:rgb(64, 158, 255);
   }
-  .cy-menu .el-tree--highlight-current /deep/ .el-tree-node.is-current>.el-tree-node__content {
+  .cy-menu .el-tree--highlight-current ::v-deep .el-tree-node.is-current>.el-tree-node__content {
     /*background-color: rgb(13, 13, 13);*/
     background-color: rgba(0,153,250,0.1);
     color: #0099FA;
     font-weight: bold;
   }
-  .cy-menu .el-tree--highlight-current /deep/ .el-tree-node.is-focusable>.el-tree-node__content {
+  .cy-menu .el-tree--highlight-current ::v-deep .el-tree-node.is-focusable>.el-tree-node__content {
     /*background-color: rgb(13, 13, 13);*/
   }
-  .cy-menu .el-tree--highlight-current /deep/ .el-tree-node.is-focusable>.el-tree-node__content:hover {
+  .cy-menu .el-tree--highlight-current ::v-deep .el-tree-node.is-focusable>.el-tree-node__content:hover {
     /*background-color: rgb(13, 13, 13);*/
     background-color: rgba(0,153,250,0.1);
   }
-  .cy-menu .el-tree--highlight-current /deep/ .el-tree-node:focus>.el-tree-node__content {
+  .cy-menu .el-tree--highlight-current ::v-deep .el-tree-node:focus>.el-tree-node__content {
     /*background-color: rgb(13, 13, 13);*/
     background-color: rgba(0,153,250,0.1);
   }

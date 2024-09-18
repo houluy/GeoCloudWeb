@@ -4,6 +4,8 @@ import Layout from '@/views/layout'
 import CyMain from '@comm/views/Layout/components/cy-main'
 // import router from "../../gxfw/router";
 import http from '@comm/service/interface.js'
+// import SurveyLink from '../../comm/components/SurveyLink.vue'
+// import SurveyPage from '../../comm/components/SurveyPage.vue'
 
 Vue.use(Router)
 const originalPush = Router.prototype.push

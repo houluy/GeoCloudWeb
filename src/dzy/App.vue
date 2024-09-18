@@ -1,22 +1,40 @@
 <template>
   <!--<div id="app" v-myListener="this.myListenerDate">-->
+  
   <div id="app"  @click="clickDiv">
+    <!-- <hello>hello</hello> -->
+    <!-- 声明路由链接 -->
+ 
+
     <router-view></router-view>
+    <!-- 用户反馈界面 -->
+    <!-- <survey></survey> -->
+
+    
   </div>
 </template>
 
 <script>
+import Survey from '../comm/components/Survey.vue';
   import http from '@comm/service/interface.js'
   import { setToken, getToken, removeToken } from '@comm/utils/auth'
   // import http from '@comm/service/interface.js'
   import { mapActions } from 'vuex'
+  // import Hello from '../comm/components/hello.vue'
 
   // import { getToken, removeToken, setToken } from '@/utils/auth'
   // import { getGuid } from '@/utils/common.js'
   // import Cookies from 'js-cookie'
   export default {
     name: 'App',
+    // components:{
+    //     hello
+    // },
+    components:{
+      Survey,
+    },
     provide () {
+
       return {
         reload: this.reload
       }

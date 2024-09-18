@@ -34,6 +34,12 @@
         <i class="wjdc"></i>
         <p>问卷调查</p>
       </a>
+      <el-button >
+        问卷调查
+      </el-button>
+      <!-- 使用 v-if 来根据条件控制子组件的渲染 -->
+      <!-- <child-component v-if="showChildComponent" /> -->
+      <!-- <component :is="currentComponent" /> -->
 
       <!--<a target="_blank" href="http://10.90.90.90/geocloud/index.html#/portal/index">-->
       <!--<i class="business"></i>-->
@@ -225,6 +231,9 @@
   import nationNew from '@comm/components/nationNew.vue'
 
   import {SM4Util} from "../../../../comm/service/sm4encry";
+
+
+
   export default {
     name: 'cy-header',
     props: ['activeMenu'],
@@ -339,6 +348,7 @@
         }
       }
       return {
+        // 控制子组件显示的条件变量
         sysName: window.systemName,
         loadingD: false,
         identifyT: 'identifyT',

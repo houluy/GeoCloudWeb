@@ -686,7 +686,7 @@
               this.getTabelDataAll(this.orderDetlia.id)
             } else {
               this.$message({
-                message: '重提数据失败！',
+                message: '数据失败！',
                 type: 'warning'
               })
             }
@@ -1596,20 +1596,20 @@
     /*width: 280px!important;*/
     width: 21.2vw !important;
   }
-  #uploadFilesDialog /deep/ .el-dialog__footer{
+  #uploadFilesDialog ::v-deep .el-dialog__footer{
     background-color: #F3F3F3!important;
   }
-  #uploadFilesDialog /deep/ .el-form-item__label{
+  #uploadFilesDialog ::v-deep .el-form-item__label{
     border-left: .1rem solid #2E6CFC;
     margin-top: 5px;
     line-height: 14px;
   }
-  #uploadFilesDialog /deep/ .el-upload--picture-card{
+  #uploadFilesDialog ::v-deep .el-upload--picture-card{
     width: 80px;
     height: 80px;
     line-height: 80px!important;
   }
-  #uploadFilesDialog /deep/ .el-upload-list--picture-card .el-upload-list__item {
+  #uploadFilesDialog ::v-deep .el-upload-list--picture-card .el-upload-list__item {
     width: 80px!important;
     height: 80px!important;
     margin-bottom: 0 !important;

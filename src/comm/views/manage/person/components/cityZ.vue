@@ -2,7 +2,7 @@
   <div class="city">
     <div class="currentCity">
       <div class="title line">请选择城市</div>
-      <!--<div class="content line">{{cityNameTrue}}</div>-->
+      <div class="content line">{{cityNameTrue}}</div>
     </div>
     <div class="Separator"></div>
     <div class="searchCity">
