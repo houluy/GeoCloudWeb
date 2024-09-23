@@ -2,19 +2,27 @@
   <!--<div id="app" v-myListener="this.myListenerDate">-->
   
   <div id="app"  @click="clickDiv">
-    <!-- <hello>hello</hello> -->
-    <!-- 声明路由链接 -->
+  
  
 
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
     <!-- 用户反馈界面 -->
     <!-- <survey></survey> -->
-
+    <!-- 订单管理界面 -->
+      <!-- <orderManage></orderManage> -->
+    <!-- 订单详情界面 -->
+      <orderDetail></orderDetail>
+    
+    <!-- 前端目录树 -->
+    <!-- <newTreeZ></newTreeZ> -->
     
   </div>
 </template>
 
 <script>
+import orderDetail from '../comm/views/manage/person/components/orderDetail.vue';
+import newTreeZ from './views/search/components/newTreeZ.vue';
+import orderManage from '../comm/views/manage/person/components/orderManage.vue';
 import Survey from '../comm/components/Survey.vue';
   import http from '@comm/service/interface.js'
   import { setToken, getToken, removeToken } from '@comm/utils/auth'
@@ -32,6 +40,9 @@ import Survey from '../comm/components/Survey.vue';
     // },
     components:{
       Survey,
+      orderManage,
+      newTreeZ,
+      orderDetail
     },
     provide () {
 
