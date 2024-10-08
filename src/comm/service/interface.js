@@ -518,7 +518,9 @@ export default {
   getTimepvuv: (params) => http.postAxios('/mj/agrsShop/getTimepvuv', params),
   // 获取在线订单数、在线订单数据量、离线订单数、离线订单数据量
   getOrderNumByOL: (params) => http.postAxios('/mj/agrsOrder/agrsGetOrderNumByOL', params),
-  getOrderNumByOLNew: (params) => http.postAxios('/mj/agrsOrder/agrsGetOrderNumByOLNew', params),
+  // getOrderNumByOLNew: (params) => http.postAxios('/mj/agrsOrder/agrsGetOrderNumByOLNew', params),
+  // cmm 20241004 新增接口
+  getOrderNumByOLNew: (params) => http.postAxios('http://127.0.0.1:9999/get_order_count', params),
   agrsGetOrderNumByMonth: (params) => http.postAxios('/mj/agrsOrder/agrsGetOrderNumByMonth', params),
   // 获取单位名称、在线订单数、在线订单数据量、离线订单数、离线订单数据量
   getOrderNumByUnit: (params) => http.postAxios('/mj/agrsOrder/agrsGetOrderNumByUnit', params),

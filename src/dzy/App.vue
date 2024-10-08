@@ -11,15 +11,17 @@
     <!-- 订单管理界面 -->
       <!-- <orderManage></orderManage> -->
     <!-- 订单详情界面 -->
-      <orderDetail></orderDetail>
-    
+      <!-- <orderDetail></orderDetail> -->
     <!-- 前端目录树 -->
     <!-- <newTreeZ></newTreeZ> -->
+    <!-- 订单数据统计界面 -->
+     <ordercompStat></ordercompStat>
     
   </div>
 </template>
 
 <script>
+import ordercompStat from '../comm/views/manage/person/statisticsModule/ordercompStat.vue';
 import orderDetail from '../comm/views/manage/person/components/orderDetail.vue';
 import newTreeZ from './views/search/components/newTreeZ.vue';
 import orderManage from '../comm/views/manage/person/components/orderManage.vue';
@@ -42,7 +44,8 @@ import Survey from '../comm/components/Survey.vue';
       Survey,
       orderManage,
       newTreeZ,
-      orderDetail
+      orderDetail,
+      ordercompStat
     },
     provide () {
 
