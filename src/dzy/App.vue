@@ -9,13 +9,13 @@
     <!-- 用户反馈界面 -->
     <!-- <survey></survey> -->
     <!-- 订单管理界面 -->
-      <!-- <orderManage></orderManage> -->
+      <orderManage></orderManage>
     <!-- 订单详情界面 -->
       <!-- <orderDetail></orderDetail> -->
     <!-- 前端目录树 -->
     <!-- <newTreeZ></newTreeZ> -->
     <!-- 订单数据统计界面 -->
-     <ordercompStat></ordercompStat>
+     <!-- <ordercompStat></ordercompStat> -->
     
   </div>
 </template>

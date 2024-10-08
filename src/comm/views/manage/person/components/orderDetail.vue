@@ -1,4 +1,4 @@
-<template>
+<template slot-scope="scope">
   <div class="createOrder">
     <div class="createOrder_one" v-if="!showDiv">
       <el-card class="box-card">
@@ -122,8 +122,11 @@
         <!--待提交-->
         <div v-if="orderStatusIndex === -1">
           <el-button @click="goSubmitData(-1)" style="margin: 0.2rem; " type="primary"  >保 存</el-button>
-          <el-button @click="goSubmitData(0)" style="margin: 0.2rem;" type="primary"  >提 交</el-button>
+           <!-- 订单反馈功能cmm20241005 -->
+          <!-- <el-button  @click="goSubmitData(0)" style="margin: 0.2rem;" type="primary"  >提 交</el-button> -->
+          <el-button @click="showFeedBack"  style="margin: 0.2rem;" type="primary"  >提 交</el-button>
         </div>
+        <button @click="showFeedBack">打开订单基本信息</button>
         <!--异常订单-->
         <div v-if="orderStatusIndex === 5">
           <!--<el-button @click="goSubmitData(-1)" style="margin: 0.2rem; " type="primary"  >订单重置</el-button>-->
@@ -143,79 +146,34 @@
           <el-button @click="getOrderFile" style="margin: 0.2rem;" type="danger"  >下载订单附件</el-button>
         </div>
       </div>
+
+
+      <el-dialog title="用户订单反馈" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-form-item label="请对本次服务做出评价：" >
+            <el-select v-model="form.region" placeholder="请选择活动区域">
+              <el-option label="非常满意" value="非常满意"></el-option>
+              <el-option label="满意" value="满意"></el-option>
+              <el-option label="一般" value="一般"></el-option>
+              <el-option label="不满意" value="不满意"></el-option>
+              <el-option label="非常不满意" value="非常不满意"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="活动名称" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        </div>
+      </el-dialog>
+
+
     </div>
-    <dialogShowDetail :titleDialog = titleDialog></dialogShowDetail>
-    <el-dialog class="elDialog_Aduti" :title="title" :visible.sync="dialogVisible" width="7rem">
-      <span>
-        <div style="width: 100%">
-          <!--<el-form ref="form" label-width="2rem" style="text-align: left">-->
-          <!--<el-form-item>-->
-              <el-input :rows="4"
-                        type="textarea"
-                        v-model="inputFeekBack"></el-input>
-          <!--</el-form-item>-->
-          <!--</el-form>-->
-        </div>
-      </span>
-      <span slot="footer"
-            class="dialog-footer">
-        <el-button size="small"
-                   @click="dialogVisible = false">取 消</el-button>
-        <el-button size="small"
-                   type="primary"
-                   @click="audit(2, orderDetlia)">确 定</el-button>
-        <!--<el-button size="small"-->
-        <!--type="primary"-->
-        <!--@click="editDialogVisible"-->
-        <!--v-if="show === false">确 定</el-button>-->
-      </span>
-    </el-dialog>
-    <el-dialog class="elDialog_Aduti" :title="titleFlog" :visible.sync="dialogVisibleFlog" width="7rem">
-      <span>
-        <div style="width: 100%">
-          <!--<el-form ref="form" label-width="2rem" style="text-align: left">-->
-          <!--<el-form-item>-->
-              <el-input :rows="4"
-                        type="textarea"
-                        :disabled="true"
-                        v-model="inputFeekBackFlog"></el-input>
-          <!--</el-form-item>-->
-          <!--</el-form>-->
-        </div>
-      </span>
-      <span slot="footer"
-            class="dialog-footer">
-        <el-button size="small"
-                   type="primary"
-                   @click="dialogVisibleFlog = false">确 定</el-button>
-        <!--<el-button size="small"-->
-        <!--type="primary"-->
-        <!--@click="editDialogVisible"-->
-        <!--v-if="show === false">确 定</el-button>-->
-      </span>
-    </el-dialog>
-    <el-dialog
-      :title="this.titleDialog_titleZ"
-      :visible.sync="dialogVisibleDetailZ"
-      class="dialog_contentz"
-      :append-to-body = 'true'
-      width="57%">
-      <div class="eldialog_conz">
-        <el-image
-          v-if="showType"
-          style="width: 100%; height:100%;"
-          :src="showUrlZ"
-          title="点击查看大图"
-          :z-index = 'numbIndex'
-          :preview-src-list="satelliteImgArr">
-          <div slot="error" class="image-slot">
-            加载中<span class="dot">...</span>
-          </div>
-        </el-image>
-        <!--<img width="100%" height="100%"  :src="showUrlZ" alt="" v-if="showType">-->
-        <iframe :src="showUrlZ"  width="100%" height="100%" v-if="!showType"></iframe>
-      </div>
-    </el-dialog>
+ 
+
+   
   </div>
 </template>
 
@@ -243,6 +201,7 @@
       upDataFile
     },
     data () {
+
       var validateUserCardId = (rule, value, callback) => {
         let regPass = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}[0-9Xx]$)/
         if (regPass.test(value) === '') {
@@ -256,14 +215,40 @@
         }
       }
       return {
+        openFeedBackDialog: true,
+        feedbackScore: '', // 订单服务总体评价
+        feedbackContent: '111', // 用户宝贵意见
+        FeedBackFileName: '',
+        hrefData: '../../../../static/fk_mb.doc',
+        uploadDataF: '',
+        fileDShow: true,
+        FeedBackData: [],
+        rowData: {},
+        orderNameData: [],
+        form: {
+        region: '', // 用户反馈的服务评价
+        name: '' // 活动名称
+      },
+        formLabelWidth: '120px', // 表单标签的宽度
+
+
+
+
+
+
+
+
+
         dataTypeData: ['原始影像数据', '档案资料数据', '航空影像数据', '标准产品', 'J星产品'],
         isIndeterminate: false,
         multipleSelection: [],
         inputFeekBack: '',
         title: '请填写审批未通过原因:',
         titleFlog: '数据提取失败原因:',
+        // cmm20241005
         // orderStatusIndex: 0,
-        orderStatusIndex: 6,
+        // orderStatusIndex: 6,
+        orderStatusIndex: -1,
         heightPag: document.documentElement.clientHeight * 0.52 - 42,
         showCT: false,
         buttonShow: false,
@@ -353,8 +338,8 @@
           otherDoc: [], // 4 其他
           regisForm: [] // 5：签字后的分发登记表
         },
-        formLabelWidth: '80px',
-        dialogFormVisible: false,
+
+        dialogFormVisible: true,
         getMethodOptions: [
           {
             label: '在线下载',
@@ -513,6 +498,9 @@
       })
     },
     methods: {
+      // 订单反馈cmm20241005
+
+  
       getWktDataH (val) {
         http.getMaxPolygon({
           data: {
@@ -1662,9 +1650,7 @@
     background-color: #F9F9F9!important;
     border: 1px solid #E9E9E9;
   }
-  .createOrder{
-    /*margin: 4vh 5vw 4vh 5vw;*/
-  }
+
   .styleHeader {
     position: absolute;
     left: 6.2rem;
