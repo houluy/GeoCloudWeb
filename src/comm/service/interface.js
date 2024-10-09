@@ -2,6 +2,8 @@ import {
   http
 } from './request'
 export default {
+  //用户订单反馈
+  userFeedback: (params) => http.postAxios('/api/feedback', params),
   // login
   loginByUsername: (params) => http.postAxios('/systemAA/login/loginForm', params),
   // login

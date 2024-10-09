@@ -463,9 +463,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="feedbackFormVisible = false"
-          >提 交</el-button
-        >
+        <el-button type="primary" @click="submitFeedback">提 交</el-button>
         <el-button @click="feedbackFormVisible = false">取 消</el-button>
       </div>
     </el-dialog>
@@ -806,9 +804,6 @@ export default {
   },
   methods: {
     // cmm20241008订单反馈弹窗
-    change() {
-      this.$forceUpdate();
-    },
     handleFeedbackClose() {
       this.feedbackFormVisible = false;
       this.feedbackForm = {
@@ -816,6 +811,44 @@ export default {
         content: "",
       };
     },
+
+    //调用submitFeedback接口
+    submitFeedback() {
+      http
+        .userFeedback({
+          score: this.feedbackForm.score,
+          content: this.feedbackForm.content,
+        })
+        .then((response) => {
+          if (response && response.data && response.data.success) {
+            // 反馈提交成功
+            this.$message({
+              message: response.data.message, // 显示成功消息
+              type: "success", // 类型为成功
+              duration: 3000, // 3秒后自动消失
+            });
+            console.log("反馈提交成功！", response.data.message);
+          } else {
+            // 反馈提交失败
+            this.$message({
+              message: response.data.message || "字段不能为空，请重试！",
+              type: "error", // 类型为错误
+              duration: 3000,
+            });
+            console.error("反馈提交失败", response.data.message);
+          }
+        })
+        .catch((error) => {
+          // 请求错误
+          this.$message({
+            message: "字段不能为空，请重试！",
+            type: "error", // 类型为错误
+            duration: 3000,
+          });
+          console.error("请求错误", error);
+        });
+    },
+
     getWktDataH(val) {
       http
         .getMaxPolygon({

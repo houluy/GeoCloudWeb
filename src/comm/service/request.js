@@ -10,7 +10,8 @@ import {
 import searchStore from '@comm/store/modules/searchStore.js'
 // 在config.js文件中统一存放一些公共常量，方便之后维护
 // import { baseURL } from './config.js'
-const baseURL = ''
+//cmm用户订单反馈1009
+const baseURL = 'http://127.0.0.1:5000'
 
 // 添加请求拦截器，在发送请求之前做些什么(**具体查看axios文档**)
 axios.interceptors.request.use(function (config) {
