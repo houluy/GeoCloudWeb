@@ -357,14 +357,14 @@ const router = new Router({
     }]
 })
 router.beforeEach((to, from, next) => {
-  http.getAgrsCatalogTree().then(res => {
-    if (to.name === 'error') {
-      // router.push({path: '/search'})
-      window.location.href = 'http://geocloudsso.cgs.gov.cn/ssoserver/moc2/authorize?response_type=code&client_id=HYZXGFv2020&redirect_uri=http://geogf.agrs.cn/search&state=http://geogf.agrs.cn/search'
-    }
-  }).catch((err) => {
-    router.push({path: '/error'})
-  })
+  // http.getAgrsCatalogTree().then(res => {
+  //   if (to.name === 'error') {
+  //     // router.push({path: '/search'})
+  //     window.location.href = 'http://geocloudsso.cgs.gov.cn/ssoserver/moc2/authorize?response_type=code&client_id=HYZXGFv2020&redirect_uri=http://geogf.agrs.cn/search&state=http://geogf.agrs.cn/search'
+  //   }
+  // }).catch((err) => {
+  //   router.push({path: '/error'})
+  // })
   next()
 })
 export default router

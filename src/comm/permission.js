@@ -26,6 +26,8 @@ const whiteList3 = '/contactUs' // no redirect whitelist
 const whiteList4 = '/offLineDisk'
 
 router.beforeEach((to, from, next) => {
+  console.log(to.path,from.path)
+  // debugger
   const token = getToken()
   // NProgress.start() // start progress bar
   // 如果未匹配到路由
