@@ -289,7 +289,7 @@
             >保 存</el-button
           >
           <el-button
-            @click="feedbackFormVisible = true"
+            @click="openFeedbackDialog(scope.row)"
             style="margin: 0.2rem"
             type="primary"
             >提 交</el-button
@@ -434,36 +434,62 @@
     <!-- cmm20241008订单反馈弹窗 -->
 
     <el-dialog
-      title="用户订单反馈"
       :visible.sync="feedbackFormVisible"
       center
       :before-close="handleFeedbackClose"
     >
+      <div class="feedbackTitle">用户订单反馈</div>
+
+      <div class="FeedBack_content">
+        <div class="FeedBack_content_notion">
+          <div
+            class="FeedBack_content_span"
+            v-for="(item, index) in FeedBackData"
+            :key="index"
+          >
+            <span class="FeedBack_content_span_left">{{ item.name }}：</span>
+            <span class="FeedBack_content_span_right">{{ item.value }}</span>
+          </div>
+        </div>
+      </div>
+
       <el-form :model="feedbackForm">
         <el-form-item
-          label="请对本次服务做出评价："
+          label="请对本次服务做出评价"
           :label-width="feedbackFormLabelWidth"
-        >
-          <el-select v-model="feedbackForm.score" placeholder="请选择">
+          ><span style="" class="spanbt"> *</span>
+          <!-- <el-select v-model="feedbackForm.score" placeholder="请选择">
             <el-option label="非常满意" value="非常满意"></el-option>
             <el-option label="满意" value="满意"></el-option>
             <el-option label="一般" value="一般"></el-option>
             <el-option label="不满意" value="不满意"></el-option>
             <el-option label="非常不满意" value="非常不满意"></el-option>
-          </el-select>
+          </el-select> -->
+
+          <el-checkbox-group v-model="feedbackForm.score" :max="1">
+            <el-checkbox label="非常满意"></el-checkbox>
+            <el-checkbox label="满意"></el-checkbox>
+            <el-checkbox label="一般"></el-checkbox>
+            <el-checkbox label="不满意"></el-checkbox>
+            <el-checkbox label="非常不满意"></el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <el-form-item
-          label="请留下您的意见或建议："
+          label="请留下您的意见或建议"
           :label-width="feedbackFormLabelWidth"
         >
           <el-input
             v-model="feedbackForm.content"
             autocomplete="off"
+            type="textarea"
+            placeholder="请输入内容"
+            rows="8"
+            class="custom-textarea"
           ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFeedback">提 交</el-button>
+        <el-button type="primary" @click="submitFeedback()">提 交</el-button>
         <el-button @click="feedbackFormVisible = false">取 消</el-button>
       </div>
     </el-dialog>
@@ -511,13 +537,25 @@ export default {
       // cmm20241008订单反馈弹窗
       feedbackFormVisible: false,
       feedbackForm: {
-        score: "",
+        score: [],
         content: "",
       },
-      feedbackFormLabelWidth: "200px",
+      feedbackFormLabelWidth: "160px",
       center: true,
       score: "",
       content: "",
+      FeedBackData: [],
+      rowData: {
+        // ordername: "20221008WP00001",
+      },
+      row: {
+        ordername: "123456789", // 订单编号
+        dataCount: "100", // 数据景数
+        dataSum: "5GB", // 数据量
+        productName: "项目A", // 项目名称
+        applyUserUsed: "测绘", // 用途
+        applyUserUnit: "单位B", // 申请单位
+      },
 
       dataTypeData: [
         "原始影像数据",
@@ -803,6 +841,42 @@ export default {
     });
   },
   methods: {
+    //点击提交订单按钮cmm20241009
+    openFeedbackDialog(row) {
+      this.feedbackFormVisible = true;
+      this.FeedBackData = [
+        {
+          name: "订单编号",
+          // value: this.row.ordername,
+          value: row.ordername,
+        },
+        {
+          name: "数据景数",
+          // value: this.row.dataCount,
+          value: row.dataCount,
+        },
+        {
+          name: "数据量",
+          // value: this.row.dataSum,
+          value: row.dataSum,
+        },
+        {
+          name: "项目名称",
+          // value: this.row.productName,
+          value: row.productName,
+        },
+        {
+          name: "用途",
+          // value: this.row.applyUserUsed,
+          value: row.applyUserUsed,
+        },
+        {
+          name: "申请单位",
+          // value: this.row.applyUserUnit,
+          value: row.applyUserUnit,
+        },
+      ];
+    },
     // cmm20241008订单反馈弹窗
     handleFeedbackClose() {
       this.feedbackFormVisible = false;
@@ -814,41 +888,56 @@ export default {
 
     //调用submitFeedback接口
     submitFeedback() {
+      if (!this.feedbackForm.score[0]) {
+        this.$message({
+          message: "评分不能为空，请填写评分后再提交！",
+          type: "error",
+          duration: 3000,
+        });
+        console.error("评分不能为空！");
+        return; // 阻止提交
+      }
+
       http
         .userFeedback({
-          score: this.feedbackForm.score,
+          // responseSpeed: this.FeedBackDataTow[1].value.toString(),
+          // serviceAttitude: this.FeedBackDataTow[2].value.toString(),
+          // appraise: this.FeedBackDataTow[0].value.toString(),
+          // feedBackUpload: this.uploadDataF,
+          // feedBack: this.textarea,
+          // sstatus: 8,
+          ordername: this.rowData.ordername,
+          score: this.feedbackForm.score[0],
           content: this.feedbackForm.content,
+          // id: this.rowData.id // 订单编号
         })
         .then((response) => {
           if (response && response.data && response.data.success) {
-            // 反馈提交成功
             this.$message({
-              message: response.data.message, // 显示成功消息
-              type: "success", // 类型为成功
-              duration: 3000, // 3秒后自动消失
+              message: response.data.message,
+              type: "success",
+              duration: 3000,
             });
             console.log("反馈提交成功！", response.data.message);
           } else {
-            // 反馈提交失败
             this.$message({
               message: response.data.message || "字段不能为空，请重试！",
-              type: "error", // 类型为错误
+              type: "error",
               duration: 3000,
             });
             console.error("反馈提交失败", response.data.message);
           }
         })
         .catch((error) => {
-          // 请求错误
           this.$message({
-            message: "字段不能为空，请重试！",
-            type: "error", // 类型为错误
+            message: "请求错误，请稍后再试！",
+            type: "error",
             duration: 3000,
           });
           console.error("请求错误", error);
         });
+      this.feedbackFormVisible = false;
     },
-
     getWktDataH(val) {
       http
         .getMaxPolygon({
@@ -2045,6 +2134,58 @@ export default {
   height: 80px !important;
   margin-bottom: 0 !important;
 }
+
+//cmm用户订单反馈20241010
+.FeedBack_content_notion {
+  padding: 0 18px;
+  border-bottom: 1px solid gainsboro;
+}
+.FeedBack_content_span {
+  width: 49%;
+  display: inline-block;
+  line-height: 30px;
+}
+.FeedBack_content_span_left {
+  width: 27%;
+  float: left;
+}
+.FeedBack_content_span_right {
+  width: 71%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.spanbt {
+  color: red;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 24px;
+  display: inline-block;
+  margin-left: 0px;
+  top: -2px;
+  left: -14px;
+}
+.feedbackTitle {
+  color: #409eff;
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  position: absolute;
+  top: 18px;
+  left: 240px;
+}
+.custom-textarea {
+  /* 自定义输入框样式 */
+  width: 50%; /* 宽度调整为100% */
+  padding: 0px; /* 内边距 */
+  right: 1000px;
+  left: 0px;
+  //border: 1px solid #dcdfe6; /* 边框颜色和样式 */
+  border-radius: 4px; /* 边框圆角 */
+  resize: none; /* 禁止调整大小 */
+}
+
 .content_tow {
   width: 100%;
   height: 100%;

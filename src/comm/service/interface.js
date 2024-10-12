@@ -2,8 +2,10 @@ import {
   http
 } from './request'
 export default {
-  //用户订单反馈
-  userFeedback: (params) => http.postAxios('/api/feedback', params),
+  //数据接收统计
+  dataReceive: (params) => http.getAxios('/get_order_count', params),
+  //用户订单反馈cmm20241009
+  userFeedback: (params) => http.postAxios('/feedback/submit', params),
   // login
   loginByUsername: (params) => http.postAxios('/systemAA/login/loginForm', params),
   // login
